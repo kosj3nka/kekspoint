@@ -36,8 +36,29 @@ export default function Hero() {
                   aria-hidden="true"
                   className="pointer-events-none absolute top-full -right-10 -mt-6 h-16 w-16 -rotate-90 object-contain sm:-right-12 sm:-mt-8 sm:h-20 sm:w-20"
                 />
-                <p className="absolute top-full left-1/2 mt-12 w-[170px] -translate-x-[8%] text-center font-sans text-[11px] leading-snug text-cream/90 italic sm:mt-16 sm:translate-x-[10%]">
-                  follow the cookie crumbs trail to Papova ul. 2
+                <svg
+                  aria-hidden="true"
+                  viewBox="0 0 60 80"
+                  className="pointer-events-none absolute top-full left-1/2 h-16 w-12 -translate-x-[170%] translate-y-1 text-cream/90 sm:h-20 sm:w-14 sm:-translate-x-[190%] sm:translate-y-2 md:-translate-x-[230%] md:translate-y-3 lg:-translate-x-[270%] lg:translate-y-4 xl:-translate-x-[310%] xl:translate-y-5"
+                >
+                  <path
+                    d="M46 74C40 60 44 42 34 30C26 20 14 16 8 6"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                  />
+                  <path
+                    d="M8 6L15 9.5M8 6L6 14"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+                <p className="absolute top-full left-1/2 mt-12 w-[170px] -translate-x-[8%] text-center font-sans text-[11px] leading-snug text-cream/90 italic sm:mt-16 sm:translate-x-[10%] md:translate-x-[20%] lg:translate-x-[30%] xl:translate-x-[40%]">
+                  follow the cookie crumbs <br /> trail to Papova ul. 2
                 </p>
               </div>
             </div>
