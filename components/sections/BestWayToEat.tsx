@@ -4,22 +4,13 @@ export default function BestWayToEat() {
   return (
     <section id="best-way" className="bg-cream text-brand-red">
       <div className="mx-auto flex max-w-6xl flex-col items-center gap-10 px-6 py-24 md:flex-row">
-        <div className="relative w-full md:w-1/2">
+        <div className="w-full md:w-1/2">
           <div className="relative aspect-[4/5] w-full overflow-hidden rounded-sm">
             <Image
-              src="/assets/bestWayToEat.jpg"
-              alt="A warm KeksPoint cookie paired with a scoop of ice cream"
+              src="/assets/eatingCookie.jpg"
+              alt="A woman biting into a freshly baked KeksPoint cookie outdoors in a grassy field"
               fill
               sizes="(min-width: 768px) 50vw, 100vw"
-              className="object-cover"
-            />
-          </div>
-          <div className="absolute -right-6 -bottom-6 h-32 w-32 overflow-hidden rounded-sm border-4 border-cream shadow-lg sm:h-40 sm:w-40">
-            <Image
-              src="/assets/eatingCookie.jpg"
-              alt="Someone biting into a freshly baked KeksPoint cookie"
-              fill
-              sizes="160px"
               className="object-cover"
             />
           </div>
