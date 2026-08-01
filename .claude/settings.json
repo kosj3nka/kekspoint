@@ -10,7 +10,17 @@
       "Bash(node \"C:\\\\Users\\\\korisnik\\\\AppData\\\\Local\\\\Temp\\\\claude\\\\c--Users-korisnik-Gita-AkeksPoint\\\\893820a4-b727-45e3-988f-e45e42899cd6\\\\scratchpad\\\\parse_transcripts.js\" /tmp/recent_transcripts_win.txt)",
       "Bash(curl -s http://localhost:*)",
       "Bash(curl -s -o /dev/null -w *)",
-      "PowerShell(Get-Process *)"
+      "PowerShell(Get-Process *)",
+      "Bash(pnpm -v)",
+      "Bash(pnpm approve-builds *)",
+      "Bash(pnpm install *)",
+      "Bash(mkdir -p public/assets)",
+      "Bash(cp assets/*.png assets/*.jpg assets/*.jfif assets/*.mp4 public/assets/)",
+      "Bash(npx tsc *)",
+      "mcp__Claude_Browser__get_page_text",
+      "mcp__Claude_Browser__read_console_messages",
+      "mcp__Claude_Browser__read_page",
+      "mcp__Claude_Browser__read_network_requests"
     ],
     "additionalDirectories": [
       "\\tmp"
