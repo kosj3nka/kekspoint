@@ -70,7 +70,7 @@ The site needs to feel editorial and dynamic on the front, but also be **fully m
 
 4. **Promo section** *(conditional)* — appears right after the tray **only when turned on in the admin**. Heading + text + one image or video, for seasonal offers. When off, it's hidden entirely and the page flows straight to the next section.
 
-5. **"The best way to eat it"** — editorial band built around **`bestWayToEat.jpg`**, describing the warm-cookie-and-ice-cream ritual and how to enjoy them fresh.
+5. **"The best way to eat it"** — editorial band built around **`eatingCookie.jpg`**, describing the warm-cookie-and-ice-cream ritual and how to enjoy them fresh. (`bestWayToEat.jpg` is actually a Croatian-language cookie-storage infographic, not a lifestyle photo — discovered during Phase 2 build, do not use it here.)
 
 6. **About us** — the KeksPoint story (Marija Petrović, first birthday, popularizing American cookies in Zagreb) with `aboutUs.jpg` / `worker.jpg` / `shop.jpg`. Warm, personal, editorial.
 
@@ -135,9 +135,9 @@ Cookie PNGs and promo media live in **Supabase Storage**; the tables store their
 
 Confirmed in your `assets` folder and where each is used:
 
-- **Hero:** `cookieTimelapse.mp4` (video), `2heroBackground.png` (poster)
+- **Hero:** `cookieTimelapse.mp4` (video), `3cookies.jpg` (poster — built in Phase 2; `2heroBackground.png` was the original plan but wasn't used)
 - **Carousel:** `tray.png` + cookie PNGs (`BUENOcookie.png`, `bagCookies.png`, `heroBox.png`, `crumbs.png` for decoration) — plus new cookie PNGs added via admin
-- **Best way to eat:** `bestWayToEat.jpg`, support `cookieMoment.mp4`, `eatingCookie.jpg`
+- **Best way to eat:** `eatingCookie.jpg` (built in Phase 2). `bestWayToEat.jpg` is NOT a lifestyle photo — it's a Croatian-language cookie-storage infographic — do not use it here despite the filename.
 - **About:** `aboutUs.jpg`, `worker.jpg`, `shop.jpg`, `cookieHeads.jpg`
 - **Birthday cookie:** `bigBdayCookie.jpg`, `blowingWish.mp4`
 - **Gallery/atmosphere (optional strip):** `picnicCookies.jpg`, `beachCookie.jpg`, `giftBoxes.jpg`, `inBag.jpg`, `3cookies.jpg`, `naredani.jpg`, `cookieRows.jfif`, `cookieHead.jpg`
