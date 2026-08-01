@@ -6,6 +6,8 @@
   --color-gold: #c89b3c;
   --font-display: var(--font-playfair);
   --font-sans: var(--font-inter);
+  --font-heading: var(--font-lexend);
+  --font-script: var(--font-luxurious-script);
 }
 
 @utility bg-grid {
@@ -18,4 +20,9 @@
 body {
   background-color: var(--color-cream);
   color: var(--color-brand-red);
+}
+
+::selection {
+  background-color: var(--color-brand-red);
+  color: var(--color-cream);
 }

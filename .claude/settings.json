@@ -20,7 +20,23 @@
       "mcp__Claude_Browser__get_page_text",
       "mcp__Claude_Browser__read_console_messages",
       "mcp__Claude_Browser__read_page",
-      "mcp__Claude_Browser__read_network_requests"
+      "mcp__Claude_Browser__read_network_requests",
+      "Bash(npx tailwindcss *)",
+      "Bash(node \"C:\\\\Users\\\\korisnik\\\\AppData\\\\Local\\\\Temp\\\\claude\\\\c--Users-korisnik-Gita-AkeksPoint\\\\2d2587ad-a886-471e-b905-462df61cf6e6\\\\scratchpad\\\\tw-test.mjs\")",
+      "Bash(pnpm dev *)",
+      "Bash(taskkill //F //IM node.exe //T)",
+      "Bash(bash \"C:\\\\Users\\\\korisnik\\\\.claude\\\\plugins\\\\cache\\\\claude-plugins-official\\\\superpowers\\\\6.2.0\\\\skills\\\\subagent-driven-development\\\\scripts\\\\review-package\" \"docs/superpowers/plans/2026-08-01-editorial-sections-implementation.md\" 4cbfd37 HEAD)",
+      "Bash(powershell -Command \"Get-ChildItem 'c:\\\\Users\\\\korisnik\\\\Gita\\\\AkeksPoint\\\\public\\\\assets' | Select-Object Name, Length\")",
+      "Bash(node screenshot.js)",
+      "Bash(node screenshot3.js)",
+      "PowerShell(taskkill /PID 16608 /F 2>&1; Start-Sleep -Seconds 1; $conn = Get-NetTCPConnection -LocalPort 3000,3001 -State Listen -ErrorAction SilentlyContinue; if \\($conn\\) { $conn.OwningProcess | Sort-Object -Unique | ForEach-Object { Stop-Process -Id $_ -Force -ErrorAction SilentlyContinue }; \"stopped remaining\" } else { \"clear\" })",
+      "PowerShell($conn = Get-NetTCPConnection -LocalPort 3000 -State Listen -ErrorAction SilentlyContinue; if \\($conn\\) { $conn.OwningProcess | Sort-Object -Unique | ForEach-Object { Stop-Process -Id $_ -Force }; \"stopped\" } else { \"nothing listening\" })",
+      "PowerShell(Get-Process -Name node -ErrorAction SilentlyContinue)",
+      "Bash(cd \"c:\\\\Users\\\\korisnik\\\\Gita\\\\AkeksPoint\" && mkdir -p docs/superpowers/specs 2>/dev/null; ls docs/superpowers/specs 2>/dev/null)",
+      "Bash(bash \"C:\\\\Users\\\\korisnik\\\\.claude\\\\plugins\\\\cache\\\\claude-plugins-official\\\\superpowers\\\\6.2.0\\\\skills\\\\subagent-driven-development\\\\scripts\\\\sdd-workspace\" docs/superpowers/plans/2026-08-01-promo-section-implementation.md)",
+      "Bash(bash \"C:\\\\Users\\\\korisnik\\\\.claude\\\\plugins\\\\cache\\\\claude-plugins-official\\\\superpowers\\\\6.2.0\\\\skills\\\\subagent-driven-development\\\\scripts\\\\task-brief\" docs/superpowers/plans/2026-08-01-promo-section-implementation.md 1)",
+      "Bash(bash \"C:\\\\Users\\\\korisnik\\\\.claude\\\\plugins\\\\cache\\\\claude-plugins-official\\\\superpowers\\\\6.2.0\\\\skills\\\\subagent-driven-development\\\\scripts\\\\review-package\" docs/superpowers/plans/2026-08-01-promo-section-implementation.md 8392e9e682bc83006701b27d1da901f3412b7aa3 HEAD)",
+      "Bash(bash \"C:\\\\Users\\\\korisnik\\\\.claude\\\\plugins\\\\cache\\\\claude-plugins-official\\\\superpowers\\\\6.2.0\\\\skills\\\\subagent-driven-development\\\\scripts\\\\task-brief\" docs/superpowers/plans/2026-08-01-promo-section-implementation.md 2)"
     ],
     "additionalDirectories": [
       "\\tmp"
