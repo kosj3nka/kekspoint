@@ -31,9 +31,10 @@ Full-screen video hero, replacing the current flat-color placeholder.
 
 Split-panel, cream background, image on the left.
 
-- Primary image: `bestWayToEat.jpg`, left panel
-- Inset accent: `eatingCookie.jpg`, small image overlapping the primary image's bottom-right corner
+- Primary image: `eatingCookie.jpg`, left panel, full width of its panel — no inset accent
 - Right panel: heading only (`font-display`), no body copy — "The Best Way to Eat It"
+
+**Correction (post-implementation):** the spec originally called for `bestWayToEat.jpg` as primary with `eatingCookie.jpg` as an inset accent, per the master plan's asset mapping. During Phase 2 visual verification, `bestWayToEat.jpg` turned out to actually be a Croatian-language cookie-storage infographic, not a lifestyle photo — the master plan's asset mapping was wrong about this one file's contents. `eatingCookie.jpg` was promoted to the sole primary image and the inset was dropped.
 
 ### AboutUs (`components/sections/AboutUs.tsx`)
 

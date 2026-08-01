@@ -101,6 +101,8 @@ git commit -m "Hero: full-screen video background with tagline and scroll cue"
 - Consumes: `bg-cream`/`text-brand-red`/`font-display` tokens (Phase 1); `/assets/bestWayToEat.jpg`, `/assets/eatingCookie.jpg` (Phase 1 asset copy)
 - Produces: `export default function BestWayToEat()` — same zero-prop signature and `id="best-way"`
 
+**Correction (post-implementation):** `bestWayToEat.jpg` turned out to be a cookie-storage infographic, not a lifestyle photo — this task's original code (below) was superseded after visual verification. See the design spec's correction note for the fix: `eatingCookie.jpg` became the sole primary image, no inset.
+
 - [ ] **Step 1: Replace the component**
 
 ```tsx
