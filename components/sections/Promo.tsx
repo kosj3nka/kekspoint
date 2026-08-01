@@ -65,7 +65,6 @@ export default function Promo() {
             src={image.src}
             alt={image.alt}
             fill
-            priority={index === 0}
             sizes="100vw"
             className={`object-cover transition-opacity duration-1000 ${
               index === activeIndex ? "opacity-100" : "opacity-0"
@@ -74,9 +73,9 @@ export default function Promo() {
         ))}
       </div>
 
-      <div className="pointer-events-none absolute inset-0 bg-linear-to-t from-black/60 via-black/10 to-transparent" />
+      <div className="pointer-events-none absolute inset-0 bg-linear-to-t from-black/70 via-black/40 to-black/20" />
 
-      <div className="pointer-events-none absolute inset-0 flex flex-col items-center justify-center gap-2 px-6 text-center text-cream">
+      <div className="pointer-events-none absolute inset-0 flex flex-col items-center justify-center gap-2 px-6 text-center text-cream drop-shadow-[0_1px_2px_rgba(0,0,0,0.45)]">
         <h2 className="font-display text-3xl sm:text-4xl">{PROMO_HEADING}</h2>
         <p className="font-sans text-sm sm:text-base">{PROMO_SUBLINE}</p>
       </div>
