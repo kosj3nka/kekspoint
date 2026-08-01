@@ -1,4 +1,5 @@
 import Image from "next/image";
+import DeliveryPopup from "./DeliveryPopup";
 import MenuCarousel from "./MenuCarousel";
 
 export default function Hero() {
@@ -14,12 +15,7 @@ export default function Hero() {
             </h1>
 
             <div className="flex flex-wrap items-start justify-center gap-2 sm:gap-3">
-              <a
-                href="#order"
-                className="inline-flex h-10 items-center justify-center rounded-full bg-cream px-4 font-sans text-xs font-bold tracking-wide text-brand-red uppercase transition hover:opacity-90 sm:h-12 sm:px-5 sm:text-sm"
-              >
-                Order Now!
-              </a>
+              <DeliveryPopup />
 
               <div className="relative">
                 <a
