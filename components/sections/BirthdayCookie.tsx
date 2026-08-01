@@ -30,7 +30,7 @@ export default function BirthdayCookie() {
           <h2 className="font-display text-4xl">Giant Birthday Cookie</h2>
           <p className="mt-6 font-sans text-base leading-relaxed">
             Skip the cake. Our giant personalized birthday cookies are the KeksPoint way to
-            celebrate — order at least 72 hours ahead and we'll work out the flavor and
+            celebrate — order at least 72 hours ahead and we&rsquo;ll work out the flavor and
             personalization with you directly, ready for pickup in-store.
           </p>
           <a
