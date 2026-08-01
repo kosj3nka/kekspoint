@@ -1,4 +1,4 @@
-import Image from "next/image";
+﻿import Image from "next/image";
 
 export default function AboutUs() {
   return (
@@ -8,8 +8,8 @@ export default function AboutUs() {
           <h2 className="font-display text-4xl">About Us</h2>
           <p className="mt-6 font-sans text-base leading-relaxed">
             KeksPoint started with one simple idea: bring real American-style cookies to Zagreb.
-            Founder Marija Petrović turned a love of baking into one of the city's most-loved
-            sweet spots — and just celebrated the shop's first birthday. Every cookie is baked
+            Founder Marija Petrović turned a love of baking into one of the city’ most-loved
+            sweet spots — and just celebrated the shop’ first birthday. Every cookie is baked
             fresh in-house, the same way, every day: crispy outside, soft inside, and always
             richly filled. Come find us on Papova ulica 2, open daily from 10:00 to 23:00.
           </p>
