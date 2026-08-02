@@ -65,7 +65,7 @@ export default function DeliveryPopup() {
               &times;
             </button>
 
-            <h2 className="font-display text-2xl">Order for delivery</h2>
+            <h2 className="font-heading text-2xl font-bold">Order for delivery</h2>
             <p className="mt-1 font-sans text-sm text-brand-red/80">
               KeksPoint delivers through:
             </p>

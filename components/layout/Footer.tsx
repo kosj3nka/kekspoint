@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 const DELIVERY_LINKS = [
   { label: "Wolt", href: "https://wolt.com" },
   { label: "Glovo", href: "https://glovoapp.com" },
@@ -9,7 +11,14 @@ export default function Footer() {
     <footer id="visit" className="bg-grid bg-brand-red px-6 py-16 text-cream">
       <div className="mx-auto flex max-w-6xl flex-col gap-10 md:flex-row md:justify-between">
         <div>
-          <h3 className="font-display text-2xl">KeksPoint</h3>
+          <Image
+            src="/assets/logo.png"
+            alt="KeksPoint"
+            width={120}
+            height={140}
+            className="mb-4 h-12 w-auto brightness-0 invert"
+          />
+          <h3 className="font-heading text-2xl font-bold">KeksPoint</h3>
           <p className="mt-2 font-sans text-sm">Papova ulica 2, Zagreb</p>
           <p className="font-sans text-sm">Monday–Sunday, 10:00–23:00</p>
         </div>
@@ -26,11 +35,12 @@ export default function Footer() {
           </ul>
         </div>
         <div>
+          <h4 className="font-script text-3xl">Follow us</h4>
           <a
             href="https://www.instagram.com/kekspoint.hr/"
             target="_blank"
             rel="noreferrer"
-            className="font-sans text-sm"
+            className="mt-1 inline-block font-sans text-sm"
           >
             @kekspoint.hr
           </a>

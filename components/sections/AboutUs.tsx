@@ -3,46 +3,34 @@ import Image from "next/image";
 export default function AboutUs() {
   return (
     <section id="about" className="bg-cream text-brand-red">
-      <div className="mx-auto flex max-w-6xl flex-col items-center gap-10 px-6 py-24 md:flex-row">
-        <div className="w-full md:w-1/2">
-          <h2 className="font-display text-4xl">About Us</h2>
-          <p className="mt-6 font-sans text-base leading-relaxed">
-            KeksPoint started with one simple idea: bring real American-style cookies to Zagreb.
-            Founder Marija Petrović turned a love of baking into one of the city&rsquo;s most-loved
-            sweet spots — and just celebrated the shop&rsquo;s first birthday. Every cookie is baked
-            fresh in-house, the same way, every day: crispy outside, soft inside, and always
-            richly filled. Come find us on Papova ulica 2, open daily from 10:00 to 23:00.
-          </p>
-        </div>
-        <div className="relative w-full md:w-1/2">
-          <div className="relative aspect-[4/5] w-full overflow-hidden rounded-sm">
+      <div className="mx-auto max-w-6xl px-6 py-10">
+        <div className="mt-10 grid grid-cols-1 gap-10 md:grid-cols-3 md:grid-rows-[auto_auto] md:gap-8">
+          <div className="md:col-span-2 md:row-start-1">
+            <h2 className="font-script text-7xl sm:text-7xl">About  Us</h2>
+            <p className="mt-4 font-sans text-base leading-relaxed">
+              KeksPoint started with one simple idea: bring real <span className="font-bold"> American-style cookies </span>to Zagreb.
+              Founder <span className="font-bold"> Marija Petrović </span>turned a love of baking into one of the city&rsquo;s most-loved
+              sweet spots — and just celebrated the shop&rsquo;s first birthday. Every cookie is baked
+              fresh in-house.
+            </p>
+          </div>
+          <div className="relative aspect-[3/4] w-full overflow-hidden rounded-sm md:col-start-3 md:row-span-2 md:aspect-auto md:h-full">
             <Image
               src="/assets/aboutUs.jpg"
               alt="Inside the KeksPoint cookie shop"
               fill
-              sizes="(min-width: 768px) 50vw, 100vw"
+              sizes="(min-width: 768px) 33vw, 100vw"
               className="object-cover"
             />
           </div>
-          <div className="absolute -bottom-6 -left-6 flex gap-2">
-            <div className="relative h-28 w-20 overflow-hidden rounded-sm border-4 border-cream shadow-lg sm:h-36 sm:w-28">
-              <Image
-                src="/assets/worker.jpg"
-                alt="A KeksPoint baker at work"
-                fill
-                sizes="112px"
-                className="object-cover"
-              />
-            </div>
-            <div className="relative h-28 w-20 overflow-hidden rounded-sm border-4 border-cream shadow-lg sm:h-36 sm:w-28">
-              <Image
-                src="/assets/shop.jpg"
-                alt="The KeksPoint storefront on Papova ulica"
-                fill
-                sizes="112px"
-                className="object-cover"
-              />
-            </div>
+          <div className="relative aspect-[16/9] w-full overflow-hidden rounded-sm md:col-span-2 md:col-start-1 md:row-start-2 md:aspect-[21/9]">
+            <Image
+              src="/assets/shop.jpg"
+              alt="The KeksPoint storefront on Papova ulica"
+              fill
+              sizes="(min-width: 768px) 66vw, 100vw"
+              className="object-cover"
+            />
           </div>
         </div>
       </div>

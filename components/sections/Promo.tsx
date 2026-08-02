@@ -8,15 +8,16 @@ type PromoImage = { id: string; src: string; alt: string };
 // Placeholder data — swap for an admin/DB-backed fetch once the promo table exists.
 const PROMO_IMAGES: PromoImage[] = [
   {
-    id: "beach",
-    src: "/assets/beachCookie.jpg",
-    alt: "A KeksPoint cookie enjoyed outdoors on a sunny summer day",
-  },
-  {
     id: "pump",
     src: "/assets/icecreamPump.jpg",
     alt: "Soft serve ice cream being swirled onto a fresh KeksPoint cookie",
   },
+  {
+    id: "beach",
+    src: "/assets/beachCookie.jpg",
+    alt: "A KeksPoint cookie enjoyed outdoors on a sunny summer day",
+  },
+  
   {
     id: "eating",
     src: "/assets/eatingIcecreamCookie.jpg",
@@ -76,7 +77,7 @@ export default function Promo() {
       <div className="pointer-events-none absolute inset-0 bg-linear-to-t from-black/70 via-black/40 to-black/20" />
 
       <div className="pointer-events-none absolute inset-0 flex flex-col items-center justify-center gap-2 px-6 text-center text-cream drop-shadow-[0_1px_2px_rgba(0,0,0,0.45)]">
-        <h2 className="font-display text-3xl sm:text-4xl">{PROMO_HEADING}</h2>
+        <h2 className="font-heading font-bold text-3xl sm:text-4xl">{PROMO_HEADING}</h2>
         <p className="font-sans text-sm sm:text-base">{PROMO_SUBLINE}</p>
       </div>
     </section>

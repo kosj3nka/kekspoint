@@ -16,7 +16,16 @@ export default function BestWayToEat() {
           </div>
         </div>
         <div className="w-full md:w-1/2">
-          <h2 className="font-display text-4xl">The Best Way to Eat It</h2>
+          <h2 className="font-script text-7xl sm:text-20xl">Mali vodič za slatko očuvanje</h2>
+          <div className="relative mt-8 aspect-square w-full overflow-hidden rounded-sm">
+            <Image
+              src="/assets/bestWayToEatSteps.jpg"
+              alt="Six-step guide to keeping KeksPoint cookies fresh: store up to 3 days in an airtight container, avoid the fridge, use a sealed jar for longer freshness, thaw frozen cookies for 2 hours before eating, freeze for up to 3 months, or reheat in the oven at 180°C for 3-4 minutes"
+              fill
+              sizes="(min-width: 768px) 50vw, 100vw"
+              className="object-contain"
+            />
+          </div>
         </div>
       </div>
     </section>
