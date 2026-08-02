@@ -50,11 +50,19 @@ export default function FloatingNav() {
     const maxScrollDistance = document.documentElement.scrollHeight - window.innerHeight;
     const pageIsShort = maxScrollDistance <= ARM_SCROLL_THRESHOLD;
     if (pageIsShort) {
-      setArmed(true);
-      setVisible(true);
-    } else {
-      onScroll();
+      // Defer off the synchronous effect body (satisfies react-hooks/set-state-in-effect)
+      // — a single animation frame is visually instant.
+      const raf = requestAnimationFrame(() => {
+        setArmed(true);
+        setVisible(true);
+      });
+      window.addEventListener("scroll", onScroll, { passive: true });
+      return () => {
+        cancelAnimationFrame(raf);
+        window.removeEventListener("scroll", onScroll);
+      };
     }
+    onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
