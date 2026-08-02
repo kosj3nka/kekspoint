@@ -39,7 +39,22 @@ export default function FloatingNav() {
     // No #menu section on this page (e.g. /menu) — arm once the user has
     // scrolled roughly past the fold instead of tracking a specific section.
     const onScroll = () => setArmed(window.scrollY > ARM_SCROLL_THRESHOLD);
-    onScroll();
+    // A page whose maximum scroll distance never reaches ARM_SCROLL_THRESHOLD
+    // (e.g. /menu with few or no items) can never generate a scroll event
+    // past the threshold, which would leave the nav permanently unreachable.
+    // Treat that case as armed and visible immediately instead of waiting
+    // for a scroll that can't happen. (Comparing scrollHeight <= innerHeight
+    // alone isn't enough: a page can have some scrollable overflow — e.g.
+    // from a min-h-screen main plus footer — that still never reaches the
+    // threshold.)
+    const maxScrollDistance = document.documentElement.scrollHeight - window.innerHeight;
+    const pageIsShort = maxScrollDistance <= ARM_SCROLL_THRESHOLD;
+    if (pageIsShort) {
+      setArmed(true);
+      setVisible(true);
+    } else {
+      onScroll();
+    }
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);

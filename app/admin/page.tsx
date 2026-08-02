@@ -3,6 +3,8 @@ import { getAllMenuItemsForAdmin } from "./actions";
 import MenuItemForm from "./MenuItemForm";
 import MenuItemRow from "./MenuItemRow";
 
+export const dynamic = "force-dynamic";
+
 export default async function AdminPage() {
   const items = await getAllMenuItemsForAdmin();
 

@@ -35,7 +35,16 @@ function parseAllergens(formData: FormData): Allergen[] {
   return ALLERGENS.filter((allergen) => values.includes(allergen));
 }
 
+const MAX_IMAGE_BYTES = 5 * 1024 * 1024;
+
 async function uploadImage(file: File): Promise<string> {
+  if (!file.type.startsWith("image/")) {
+    throw new Error("Only image files are allowed.");
+  }
+  if (file.size > MAX_IMAGE_BYTES) {
+    throw new Error("Image must be under 5MB.");
+  }
+
   const supabase = getAdminSupabaseClient();
   const extension = file.name.split(".").pop() || "jpg";
   const path = `${randomUUID()}.${extension}`;

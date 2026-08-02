@@ -4,6 +4,8 @@ import Footer from "@/components/layout/Footer";
 import MenuCard from "@/components/menu/MenuCard";
 import { getActiveMenuItems } from "@/lib/menu";
 
+export const revalidate = 60;
+
 export default async function MenuPage() {
   const items = await getActiveMenuItems();
 

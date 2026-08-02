@@ -10,6 +10,7 @@ import type { MenuItem } from "@/lib/menu";
 export default function MenuItemRow({ item }: { item: MenuItem }) {
   const [editing, setEditing] = useState(false);
   const [isPending, startTransition] = useTransition();
+  const [error, setError] = useState<string | null>(null);
 
   if (editing) {
     return (
@@ -46,8 +47,10 @@ export default function MenuItemRow({ item }: { item: MenuItem }) {
           disabled={isPending}
           onChange={(event) => {
             const checked = event.target.checked;
-            startTransition(() => {
-              toggleMenuItemField(item.id, "is_active", checked);
+            setError(null);
+            startTransition(async () => {
+              const result = await toggleMenuItemField(item.id, "is_active", checked);
+              if ("error" in result) setError(result.error);
             });
           }}
         />
@@ -61,8 +64,10 @@ export default function MenuItemRow({ item }: { item: MenuItem }) {
           disabled={isPending}
           onChange={(event) => {
             const checked = event.target.checked;
-            startTransition(() => {
-              toggleMenuItemField(item.id, "is_best_seller", checked);
+            setError(null);
+            startTransition(async () => {
+              const result = await toggleMenuItemField(item.id, "is_best_seller", checked);
+              if ("error" in result) setError(result.error);
             });
           }}
         />
@@ -78,8 +83,10 @@ export default function MenuItemRow({ item }: { item: MenuItem }) {
         disabled={isPending}
         onClick={() => {
           if (confirm(`Delete "${item.name}"?`)) {
-            startTransition(() => {
-              deleteMenuItem(item.id);
+            setError(null);
+            startTransition(async () => {
+              const result = await deleteMenuItem(item.id);
+              if ("error" in result) setError(result.error);
             });
           }
         }}
@@ -87,6 +94,8 @@ export default function MenuItemRow({ item }: { item: MenuItem }) {
       >
         Delete
       </button>
+
+      {error && <p className="w-full font-sans text-xs font-semibold text-red-700">{error}</p>}
     </div>
   );
 }
