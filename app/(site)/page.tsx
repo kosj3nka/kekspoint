@@ -3,21 +3,24 @@ import FloatingNav from "@/components/layout/FloatingNav";
 import Hero from "@/components/sections/Hero";
 import Promo from "@/components/sections/Promo";
 import BestWayToEat from "@/components/sections/BestWayToEat";
+import PhotoStrip from "@/components/sections/PhotoStrip";
 import AboutUs from "@/components/sections/AboutUs";
 import BirthdayCookie from "@/components/sections/BirthdayCookie";
-import OrderForm from "@/components/sections/OrderForm";
+import { getActiveMenuItems } from "@/lib/menu";
 
-export default function Home() {
+export default async function Home() {
+  const items = await getActiveMenuItems();
+
   return (
     <>
       <FloatingNav />
       <main>
-        <Hero />
+        <Hero items={items} />
         <Promo />
         <BestWayToEat />
-        <AboutUs />
+        <PhotoStrip />
         <BirthdayCookie />
-        <OrderForm />
+        <AboutUs />
       </main>
       <Footer />
     </>
