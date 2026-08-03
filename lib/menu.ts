@@ -3,6 +3,13 @@ import { getPublicSupabaseClient } from "./supabase/public";
 export const ALLERGENS = ["gluten", "dairy", "eggs", "nuts", "peanuts", "soy"] as const;
 export type Allergen = (typeof ALLERGENS)[number];
 
+export const MAX_DESCRIPTION_WORDS = 25;
+
+export function countWords(text: string): number {
+  const trimmed = text.trim();
+  return trimmed === "" ? 0 : trimmed.split(/\s+/).length;
+}
+
 export type MenuItem = {
   id: string;
   name: string;
@@ -13,6 +20,8 @@ export type MenuItem = {
   isBestSeller: boolean;
   isActive: boolean;
   sortOrder: number;
+  woltUrl: string | null;
+  glovoUrl: string | null;
 };
 
 type MenuItemRow = {
@@ -25,10 +34,12 @@ type MenuItemRow = {
   is_best_seller: boolean;
   is_active: boolean;
   sort_order: number;
+  wolt_url: string | null;
+  glovo_url: string | null;
 };
 
 export const MENU_ITEM_COLUMNS =
-  "id, name, description, price, image_url, allergens, is_best_seller, is_active, sort_order";
+  "id, name, description, price, image_url, allergens, is_best_seller, is_active, sort_order, wolt_url, glovo_url";
 
 export function mapMenuItemRow(row: MenuItemRow): MenuItem {
   return {
@@ -43,6 +54,8 @@ export function mapMenuItemRow(row: MenuItemRow): MenuItem {
     isBestSeller: row.is_best_seller,
     isActive: row.is_active,
     sortOrder: row.sort_order,
+    woltUrl: row.wolt_url,
+    glovoUrl: row.glovo_url,
   };
 }
 

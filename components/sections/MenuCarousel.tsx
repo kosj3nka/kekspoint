@@ -1,7 +1,9 @@
 "use client";
 
 import Image from "next/image";
-import { useState } from "react";
+import Link from "next/link";
+import { AnimatePresence, motion } from "motion/react";
+import { useEffect, useState } from "react";
 import DraggableSticker from "@/components/ui/DraggableSticker";
 import type { MenuItem } from "@/lib/menu";
 
@@ -11,6 +13,12 @@ export default function MenuCarousel({ items }: { items: MenuItem[] }) {
 
   const goPrev = () => setIndex((i) => (i - 1 + items.length) % items.length);
   const goNext = () => setIndex((i) => (i + 1) % items.length);
+
+  useEffect(() => {
+    if (items.length <= 1) return;
+    const timer = setTimeout(goNext, 4500);
+    return () => clearTimeout(timer);
+  }, [index, items.length]);
 
   return (
     <div id="menu" className="bg-cream px-6 pt-8 pb-4 text-brand-red sm:pb-0">
@@ -27,24 +35,48 @@ export default function MenuCarousel({ items }: { items: MenuItem[] }) {
           />
 
           {slide?.imageUrl && (
-            <div className="absolute inset-[30%]">
+            <Link
+              href="/menu"
+              aria-label="View menu"
+              className="pointer-events-auto absolute inset-[30%]"
+            >
               <Image
                 src={slide.imageUrl}
                 alt={slide.name}
                 fill
+                priority
                 sizes="(min-width: 640px) 280px, 65vw"
                 className="object-contain drop-shadow-md"
               />
-            </div>
+            </Link>
           )}
 
-          {slide?.isBestSeller && (
-            <DraggableSticker className="pointer-events-auto absolute top-[30%] left-[14%] h-[11%] w-[11%]">
-              <div className="flex h-full w-full -rotate-12 items-center justify-center rounded-full bg-cream text-center text-[8px] leading-tight font-bold uppercase sm:text-[10px] md:text-xs lg:text-sm">
-                BEST SELLER
-              </div>
-            </DraggableSticker>
-          )}
+          <AnimatePresence>
+            {slide?.isBestSeller && (
+              <motion.div
+                key={slide.id}
+                className="pointer-events-auto absolute top-[30%] left-[14%] h-[11%] w-[11%]"
+                style={{ transformOrigin: "25% 85%" }}
+                initial={{ opacity: 0, scale: 0.7, rotate: -55, x: -12, y: 8 }}
+                animate={{ opacity: 1, scale: 1, rotate: 0, x: 0, y: 0 }}
+                exit={{
+                  opacity: 0,
+                  scale: 0.75,
+                  rotate: 20,
+                  x: 4,
+                  y: -24,
+                  transition: { duration: 0.2, ease: [0.34, 0, 0.64, 1] },
+                }}
+                transition={{ duration: 0.4, ease: [0.34, 0, 0.64, 1] }}
+              >
+                <DraggableSticker className="h-full w-full">
+                  <div className="flex h-full w-full -rotate-12 items-center justify-center rounded-full bg-cream text-center text-[8px] leading-tight font-bold uppercase sm:text-[10px] md:text-xs lg:text-sm">
+                    BEST SELLER
+                  </div>
+                </DraggableSticker>
+              </motion.div>
+            )}
+          </AnimatePresence>
 
           {items.length > 1 && (
             <>
@@ -67,12 +99,15 @@ export default function MenuCarousel({ items }: { items: MenuItem[] }) {
             </>
           )}
 
-          <p className="absolute top-[78%] left-1/2 flex -translate-x-1/2 items-center gap-4 font-script text-7xl whitespace-nowrap text-brand-red sm:text-8xl">
+          <Link
+            href="/menu"
+            className="pointer-events-auto absolute top-[78%] left-1/2 flex -translate-x-1/2 items-center gap-4 font-script text-7xl whitespace-nowrap text-brand-red transition hover:opacity-80 sm:text-8xl"
+          >
             <span aria-hidden="true" className="text-3xl sm:text-4xl">
               ★
             </span>
             Menu
-          </p>
+          </Link>
         </div>
       </div>
     </div>

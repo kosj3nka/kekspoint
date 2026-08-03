@@ -6,6 +6,11 @@ const nextConfig: NextConfig = {
     root: path.join(__dirname),
   },
   allowedDevOrigins: ["192.168.1.10"],
+  experimental: {
+    serverActions: {
+      bodySizeLimit: "6mb",
+    },
+  },
   images: {
     remotePatterns: [
       {

@@ -28,7 +28,7 @@ const luxuriousScript = Luxurious_Script({
 });
 
 export const metadata: Metadata = {
-  title: "KeksPoint — Zagreb's Cult Cookie Shop",
+  title: "KeksPoint",
   description:
     "Freshly baked American-style cookies in Zagreb — crispy outside, soft inside, richly filled. Papova ulica 2, open daily 10:00–23:00.",
 };

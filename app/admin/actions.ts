@@ -3,7 +3,15 @@
 import { randomUUID } from "crypto";
 import { revalidatePath } from "next/cache";
 import { getAdminSupabaseClient } from "@/lib/supabase/admin";
-import { ALLERGENS, MENU_ITEM_COLUMNS, mapMenuItemRow, type Allergen, type MenuItem } from "@/lib/menu";
+import {
+  ALLERGENS,
+  MAX_DESCRIPTION_WORDS,
+  MENU_ITEM_COLUMNS,
+  countWords,
+  mapMenuItemRow,
+  type Allergen,
+  type MenuItem,
+} from "@/lib/menu";
 
 export type ActionResult = { error: string } | { success: true };
 
@@ -68,8 +76,9 @@ export async function saveMenuItem(
   const id = String(formData.get("id") ?? "").trim();
   const name = String(formData.get("name") ?? "").trim();
   const description = String(formData.get("description") ?? "").trim();
+  const woltUrl = String(formData.get("wolt_url") ?? "").trim();
+  const glovoUrl = String(formData.get("glovo_url") ?? "").trim();
   const price = Number.parseFloat(String(formData.get("price") ?? ""));
-  const sortOrder = Number.parseInt(String(formData.get("sort_order") ?? "0"), 10) || 0;
   const isBestSeller = formData.get("is_best_seller") === "on";
   const isActive = formData.get("is_active") === "on";
   const allergens = parseAllergens(formData);
@@ -77,6 +86,9 @@ export async function saveMenuItem(
 
   if (!name) return { error: "Name is required." };
   if (!Number.isFinite(price) || price < 0) return { error: "Enter a valid price." };
+  if (countWords(description) > MAX_DESCRIPTION_WORDS) {
+    return { error: `Description must be ${MAX_DESCRIPTION_WORDS} words or fewer.` };
+  }
 
   const hasImage = imageFile instanceof File && imageFile.size > 0;
   if (!id && !hasImage) return { error: "A photo is required for new items." };
@@ -94,19 +106,43 @@ export async function saveMenuItem(
   const record = {
     name,
     description: description || null,
+    wolt_url: woltUrl || null,
+    glovo_url: glovoUrl || null,
     price,
     allergens,
     is_best_seller: isBestSeller,
     is_active: isActive,
-    sort_order: sortOrder,
     ...(imageUrl ? { image_url: imageUrl } : {}),
   };
 
-  const { error } = id
-    ? await supabase.from("menu_items").update(record).eq("id", id)
-    : await supabase.from("menu_items").insert(record);
+  if (id) {
+    const { error } = await supabase.from("menu_items").update(record).eq("id", id);
+    if (error) return { error: error.message };
+  } else {
+    const { data: maxRow } = await supabase
+      .from("menu_items")
+      .select("sort_order")
+      .order("sort_order", { ascending: false })
+      .limit(1)
+      .maybeSingle();
+    const nextSortOrder = (maxRow?.sort_order ?? -1) + 1;
 
-  if (error) return { error: error.message };
+    const { error } = await supabase.from("menu_items").insert({ ...record, sort_order: nextSortOrder });
+    if (error) return { error: error.message };
+  }
+
+  revalidateMenuPaths();
+  return { success: true };
+}
+
+export async function reorderMenuItems(orderedIds: string[]): Promise<ActionResult> {
+  const supabase = getAdminSupabaseClient();
+  const results = await Promise.all(
+    orderedIds.map((id, index) => supabase.from("menu_items").update({ sort_order: index }).eq("id", id)),
+  );
+
+  const failed = results.find((result) => result.error);
+  if (failed?.error) return { error: failed.error.message };
 
   revalidateMenuPaths();
   return { success: true };

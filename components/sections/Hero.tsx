@@ -1,4 +1,5 @@
 import Image from "next/image";
+import CrumbTrail from "../ui/CrumbTrail";
 import DeliveryPopup from "./DeliveryPopup";
 import MenuCarousel from "./MenuCarousel";
 import type { MenuItem } from "@/lib/menu";
@@ -20,21 +21,14 @@ export default function Hero({ items }: { items: MenuItem[] }) {
 
               <div className="relative">
                 <a
-                  href="https://www.google.com/maps/search/?api=1&query=Papova+ulica+2%2C+Zagreb"
+                  href="https://maps.app.goo.gl/wbnDAaBhkY66FxXT6"
                   target="_blank"
                   rel="noreferrer"
                   className="inline-flex h-10 items-center justify-center rounded-full bg-cream px-4 font-sans text-xs font-bold tracking-wide text-brand-red uppercase transition hover:opacity-90 sm:h-12 sm:px-5 sm:text-sm"
                 >
                   Come To Us ➤
                 </a>
-                <Image
-                  src="/assets/crumbs.png"
-                  alt=""
-                  width={80}
-                  height={80}
-                  aria-hidden="true"
-                  className="pointer-events-none absolute top-full -right-10 -mt-6 h-16 w-16 -rotate-90 object-contain sm:-right-12 sm:-mt-8 sm:h-20 sm:w-20"
-                />
+                <CrumbTrail className="pointer-events-none absolute top-full -right-10 -mt-6 h-16 w-16 -rotate-90 sm:-right-12 sm:-mt-8 sm:h-20 sm:w-20" />
                 <svg
                   aria-hidden="true"
                   viewBox="0 0 44 96"

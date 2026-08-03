@@ -6,6 +6,7 @@ import BestWayToEat from "@/components/sections/BestWayToEat";
 import PhotoStrip from "@/components/sections/PhotoStrip";
 import AboutUs from "@/components/sections/AboutUs";
 import BirthdayCookie from "@/components/sections/BirthdayCookie";
+import CookieMoment from "@/components/sections/CookieMoment";
 import { getActiveMenuItems } from "@/lib/menu";
 
 export const revalidate = 60;
@@ -24,6 +25,7 @@ export default async function Home() {
         <BirthdayCookie />
         <AboutUs />
       </main>
+      <CookieMoment />
       <Footer />
     </>
   );

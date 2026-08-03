@@ -11,13 +11,15 @@ const NAV_LINKS = [
 const AUTO_HIDE_MS = 4000;
 const ARM_SCROLL_THRESHOLD = 400;
 
-export default function FloatingNav() {
+export default function FloatingNav({ alwaysVisible = false }: { alwaysVisible?: boolean }) {
   const [armed, setArmed] = useState(false);
   const [visible, setVisible] = useState(false);
   const lastScrollY = useRef(0);
   const hideTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
+    if (alwaysVisible) return;
+
     const menuEl = document.getElementById("menu");
 
     if (menuEl) {
@@ -68,6 +70,8 @@ export default function FloatingNav() {
   }, []);
 
   useEffect(() => {
+    if (alwaysVisible) return;
+
     lastScrollY.current = window.scrollY;
 
     const onScroll = () => {
@@ -94,11 +98,13 @@ export default function FloatingNav() {
     };
   }, [armed]);
 
+  const shown = alwaysVisible || visible;
+
   return (
     <nav
-      aria-hidden={!visible}
+      aria-hidden={!shown}
       className={`fixed top-4 left-1/2 z-50 -translate-x-1/2 transition-all duration-300 ${
-        visible ? "translate-y-0 opacity-100" : "-translate-y-full opacity-0"
+        shown ? "translate-y-0 opacity-100" : "-translate-y-full opacity-0"
       }`}
     >
       <ul className="flex items-center gap-2.5 whitespace-nowrap rounded-full bg-brand-red px-4 py-2.5 font-sans text-xs font-semibold tracking-wide text-cream uppercase shadow-lg sm:gap-6 sm:px-6 sm:py-3 sm:text-sm">
