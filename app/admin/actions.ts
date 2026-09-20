@@ -2,20 +2,16 @@
 
 import { randomUUID } from "crypto";
 import { revalidatePath } from "next/cache";
-import { getAdminSupabaseClient } from "@/lib/supabase/admin";
 import {
   ALLERGENS,
   MAX_DESCRIPTION_WORDS,
-  MENU_ITEM_COLUMNS,
   countWords,
-  mapMenuItemRow,
+  menuItems,
   type Allergen,
   type MenuItem,
 } from "@/lib/menu";
 
 export type ActionResult = { error: string } | { success: true };
-
-const BUCKET = "menu-images";
 
 function revalidateMenuPaths() {
   revalidatePath("/menu");
@@ -24,18 +20,7 @@ function revalidateMenuPaths() {
 }
 
 export async function getAllMenuItemsForAdmin(): Promise<MenuItem[]> {
-  const supabase = getAdminSupabaseClient();
-  const { data, error } = await supabase
-    .from("menu_items")
-    .select(MENU_ITEM_COLUMNS)
-    .order("sort_order", { ascending: true });
-
-  if (error) {
-    console.error("Failed to load menu items for admin", error);
-    return [];
-  }
-
-  return (data ?? []).map(mapMenuItemRow);
+  return [...menuItems].sort((a, b) => a.sortOrder - b.sortOrder);
 }
 
 function parseAllergens(formData: FormData): Allergen[] {
@@ -45,7 +30,7 @@ function parseAllergens(formData: FormData): Allergen[] {
 
 const MAX_IMAGE_BYTES = 5 * 1024 * 1024;
 
-async function uploadImage(file: File): Promise<string> {
+async function fileToDataUrl(file: File): Promise<string> {
   if (!file.type.startsWith("image/")) {
     throw new Error("Only image files are allowed.");
   }
@@ -53,20 +38,8 @@ async function uploadImage(file: File): Promise<string> {
     throw new Error("Image must be under 5MB.");
   }
 
-  const supabase = getAdminSupabaseClient();
-  const extension = file.name.split(".").pop() || "jpg";
-  const path = `${randomUUID()}.${extension}`;
-
-  const { error: uploadError } = await supabase.storage.from(BUCKET).upload(path, file, {
-    contentType: file.type,
-  });
-
-  if (uploadError) {
-    throw new Error(`Image upload failed: ${uploadError.message}`);
-  }
-
-  const { data } = supabase.storage.from(BUCKET).getPublicUrl(path);
-  return data.publicUrl;
+  const buffer = Buffer.from(await file.arrayBuffer());
+  return `data:${file.type};base64,${buffer.toString("base64")}`;
 }
 
 export async function saveMenuItem(
@@ -96,39 +69,41 @@ export async function saveMenuItem(
   let imageUrl: string | undefined;
   try {
     if (hasImage) {
-      imageUrl = await uploadImage(imageFile as File);
+      imageUrl = await fileToDataUrl(imageFile as File);
     }
   } catch (err) {
     return { error: err instanceof Error ? err.message : "Image upload failed." };
   }
 
-  const supabase = getAdminSupabaseClient();
-  const record = {
-    name,
-    description: description || null,
-    wolt_url: woltUrl || null,
-    glovo_url: glovoUrl || null,
-    price,
-    allergens,
-    is_best_seller: isBestSeller,
-    is_active: isActive,
-    ...(imageUrl ? { image_url: imageUrl } : {}),
-  };
-
   if (id) {
-    const { error } = await supabase.from("menu_items").update(record).eq("id", id);
-    if (error) return { error: error.message };
-  } else {
-    const { data: maxRow } = await supabase
-      .from("menu_items")
-      .select("sort_order")
-      .order("sort_order", { ascending: false })
-      .limit(1)
-      .maybeSingle();
-    const nextSortOrder = (maxRow?.sort_order ?? -1) + 1;
+    const existing = menuItems.find((item) => item.id === id);
+    if (!existing) return { error: "Item not found." };
 
-    const { error } = await supabase.from("menu_items").insert({ ...record, sort_order: nextSortOrder });
-    if (error) return { error: error.message };
+    existing.name = name;
+    existing.description = description || null;
+    existing.woltUrl = woltUrl || null;
+    existing.glovoUrl = glovoUrl || null;
+    existing.price = price;
+    existing.allergens = allergens;
+    existing.isBestSeller = isBestSeller;
+    existing.isActive = isActive;
+    if (imageUrl) existing.imageUrl = imageUrl;
+  } else {
+    const nextSortOrder = menuItems.reduce((max, item) => Math.max(max, item.sortOrder), -1) + 1;
+
+    menuItems.push({
+      id: randomUUID(),
+      name,
+      description: description || null,
+      price,
+      imageUrl: imageUrl ?? null,
+      allergens,
+      isBestSeller,
+      isActive,
+      sortOrder: nextSortOrder,
+      woltUrl: woltUrl || null,
+      glovoUrl: glovoUrl || null,
+    });
   }
 
   revalidateMenuPaths();
@@ -136,23 +111,20 @@ export async function saveMenuItem(
 }
 
 export async function reorderMenuItems(orderedIds: string[]): Promise<ActionResult> {
-  const supabase = getAdminSupabaseClient();
-  const results = await Promise.all(
-    orderedIds.map((id, index) => supabase.from("menu_items").update({ sort_order: index }).eq("id", id)),
-  );
-
-  const failed = results.find((result) => result.error);
-  if (failed?.error) return { error: failed.error.message };
+  orderedIds.forEach((id, index) => {
+    const item = menuItems.find((entry) => entry.id === id);
+    if (item) item.sortOrder = index;
+  });
 
   revalidateMenuPaths();
   return { success: true };
 }
 
 export async function deleteMenuItem(id: string): Promise<ActionResult> {
-  const supabase = getAdminSupabaseClient();
-  const { error } = await supabase.from("menu_items").delete().eq("id", id);
+  const index = menuItems.findIndex((item) => item.id === id);
+  if (index === -1) return { error: "Item not found." };
 
-  if (error) return { error: error.message };
+  menuItems.splice(index, 1);
 
   revalidateMenuPaths();
   return { success: true };
@@ -163,13 +135,14 @@ export async function toggleMenuItemField(
   field: "is_active" | "is_best_seller",
   value: boolean,
 ): Promise<ActionResult> {
-  const supabase = getAdminSupabaseClient();
-  const { error } = await supabase
-    .from("menu_items")
-    .update({ [field]: value })
-    .eq("id", id);
+  const item = menuItems.find((entry) => entry.id === id);
+  if (!item) return { error: "Item not found." };
 
-  if (error) return { error: error.message };
+  if (field === "is_active") {
+    item.isActive = value;
+  } else {
+    item.isBestSeller = value;
+  }
 
   revalidateMenuPaths();
   return { success: true };

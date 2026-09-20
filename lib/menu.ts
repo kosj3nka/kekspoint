@@ -1,5 +1,3 @@
-import { getPublicSupabaseClient } from "./supabase/public";
-
 export const ALLERGENS = ["gluten", "dairy", "eggs", "nuts", "peanuts", "soy"] as const;
 export type Allergen = (typeof ALLERGENS)[number];
 
@@ -24,53 +22,67 @@ export type MenuItem = {
   glovoUrl: string | null;
 };
 
-type MenuItemRow = {
-  id: string;
-  name: string;
-  description: string | null;
-  price: number | string;
-  image_url: string | null;
-  allergens: string[];
-  is_best_seller: boolean;
-  is_active: boolean;
-  sort_order: number;
-  wolt_url: string | null;
-  glovo_url: string | null;
-};
-
-export const MENU_ITEM_COLUMNS =
-  "id, name, description, price, image_url, allergens, is_best_seller, is_active, sort_order, wolt_url, glovo_url";
-
-export function mapMenuItemRow(row: MenuItemRow): MenuItem {
-  return {
-    id: row.id,
-    name: row.name,
-    description: row.description,
-    price: Number(row.price),
-    imageUrl: row.image_url,
-    allergens: row.allergens.filter((value): value is Allergen =>
-      (ALLERGENS as readonly string[]).includes(value),
-    ),
-    isBestSeller: row.is_best_seller,
-    isActive: row.is_active,
-    sortOrder: row.sort_order,
-    woltUrl: row.wolt_url,
-    glovoUrl: row.glovo_url,
-  };
-}
+// This is an archived showcase project — there's no live database anymore.
+// These items live in memory, seeded as if they'd been added through the
+// admin panel, and admin edits during a running session mutate this array
+// directly (they won't survive a server restart).
+export const menuItems: MenuItem[] = [
+  {
+    id: "bueno",
+    name: "Bueno",
+    description: "A soft-baked cookie stuffed with Kinder Bueno cream and chopped hazelnut wafer.",
+    price: 3.5,
+    imageUrl: "/assets/BUENO.png",
+    allergens: ["gluten", "dairy", "eggs", "nuts"],
+    isBestSeller: true,
+    isActive: true,
+    sortOrder: 0,
+    woltUrl: null,
+    glovoUrl: null,
+  },
+  {
+    id: "nutella-cookie",
+    name: "Nutella Cookie",
+    description: "Warm, gooey cookie loaded with a molten Nutella center.",
+    price: 3.5,
+    imageUrl: "/assets/nutellaCookie.png",
+    allergens: ["gluten", "dairy", "eggs", "nuts"],
+    isBestSeller: true,
+    isActive: true,
+    sortOrder: 1,
+    woltUrl: null,
+    glovoUrl: null,
+  },
+  {
+    id: "red-velvet",
+    name: "Red Velvet",
+    description: "Classic red velvet cookie with a rich cream cheese filling.",
+    price: 3.5,
+    imageUrl: "/assets/redVelvet.png",
+    allergens: ["gluten", "dairy", "eggs"],
+    isBestSeller: false,
+    isActive: true,
+    sortOrder: 2,
+    woltUrl: null,
+    glovoUrl: null,
+  },
+  {
+    id: "lotus-cookie",
+    name: "Lotus Cookie",
+    description: "Soft cookie swirled with caramelized Lotus Biscoff spread and crushed biscuit.",
+    price: 3.5,
+    imageUrl: "/assets/lotusCookie.png",
+    allergens: ["gluten", "dairy", "eggs"],
+    isBestSeller: false,
+    isActive: true,
+    sortOrder: 3,
+    woltUrl: null,
+    glovoUrl: null,
+  },
+];
 
 export async function getActiveMenuItems(): Promise<MenuItem[]> {
-  const supabase = getPublicSupabaseClient();
-  const { data, error } = await supabase
-    .from("menu_items")
-    .select(MENU_ITEM_COLUMNS)
-    .eq("is_active", true)
-    .order("sort_order", { ascending: true });
-
-  if (error) {
-    console.error("Failed to load menu items", error);
-    return [];
-  }
-
-  return (data ?? []).map(mapMenuItemRow);
+  return menuItems
+    .filter((item) => item.isActive)
+    .sort((a, b) => a.sortOrder - b.sortOrder);
 }
